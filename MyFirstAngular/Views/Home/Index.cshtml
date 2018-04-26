@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<!DOCTYPE htm; />
+<html ng-app="store2">
+<header>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />  
+</header>
+<body ng-controller="StoreController as store">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+ <script type="text/javascript" src="~/Scripts/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="~/Scripts/app.js"></script>
+<style>
+        .anchor
+        {
+            color: White !important;
+        }
+        .active
+        {                     
+            background-color: Maroon;
+        }
+        
+        .ng-invalid.ng-dirty {
+        border-color: #FA787E;
+        }
+
+        .ng-valid.ng-dirty {
+        border-color: #78FA89;
+        }
+        
+     @*     :required:not(.required) {
+          background-color: #aca1e4;
+        }*@
+        
+        .form-group[required]:not(.required) {
+          border: 2px solid red;
+        }
+       
+   </style>
+   <ul class="list-group">
+   <li class="list-group-item" ng-repeat="product in store.products">
+   <h3>
+   {{product.name}}
+   <em class="pull-right">{{product.price | currency}}</em>
+   <br />
+   <img ng-src="{{product.image}}" />
+   </h3>
+   <section ng-controller="PanelController as panel">
+   <ul class="nav nav-pills">
+   <li ng-class="{active:panel.isSelected(1)}">
+   <a href ng-class="{anchor:panel.isSelected(1)}" ng-click="panel.setTab(1)" style="color:Maroon">Description</a>
+   </li>
+   <li ng-class="{active:panel.isSelected(2)}">
+   <a href ng-class="{anchor:panel.isSelected(2)}" ng-click="panel.setTab(2)" style="color:Maroon">Specification</a>
+   </li>
+   <li ng-class="{active:panel.isSelected(3)}">
+   <a href ng-class="{anchor:panel.isSelected(3)}" ng-click="panel.setTab(3)" style="color:Maroon">Review</a>
+   </li>
+   </ul>
+   <div class="panel" ng-show="panel.isSelected(1)">
+   <h4>Description</h4>
+   <p>{{product.description}}</p>
+   </div>
+   <div class="panel" ng-show="panel.isSelected(2)">
+   <h4>Specifications</h4>
+   <p>None yet</p>
+   </div>
+  
+   
+   <div class="panel" ng-show="panel.isSelected(3)">   
+   <h4>Reviews</h4>
+    <blockquote ng-repeat="review in product.reviews">
+   <b>Stars: {{review.stars}}</b><br />
+   {{review.body}}<br />
+   <cite>by: {{review.author}}</cite>
+   </blockquote>
+   <form ng-init="submitted=false" name="reviewForm" ng-controller="ReviewController as reviewCntrl" ng-submit="reviewForm.$valid && reviewCntrl.addReview(product)" novalidate>
+  @* <blockquote>
+   <b>Stars: {{reviewCntrl.review.stars}}</b><br />
+   {{reviewCntrl.review.body}}<br />
+   <cite>by: {{reviewCntrl.review.author}}</cite>
+   </blockquote>*@
+   
+ <h3>Submit a Review</h3><br />
+<select name="star" ng-class="{'has-error' : reviewForm.star.$invalid }" ng-model="reviewCntrl.review.stars" required>
+<option value="" selected="selected" disabled="disabled">Rate the Product</option>
+<option value="1">1 star</option>
+<option value="2">2 stars</option>
+<option value="3">3 stars</option>
+<option value="4">4 stars</option>
+<option value="5">5 stars</option>
+
+</select><br/><br />
+<textarea name="body" ng-class="{'has-error' : reviewForm.body.$invalid && !reviewForm.body.$pristine }" ng-model="reviewCntrl.review.body" placeholder="Write a short review of the product..." required></textarea><br />
+<label>by:</label>
+<input name="email" ng-class="{'has-error' : reviewForm.email.$invalid && !reviewForm.email.$pristine }" ng-model="reviewCntrl.review.author" type="email"  placeholder="jimmydean@sausage.com" required /><br />
+<input type="submit"  value="Submit" />
+</form>
+   </div>
+
+   </section>
+   
+   </li>
+   </ul>
+   </body>    
+</html>

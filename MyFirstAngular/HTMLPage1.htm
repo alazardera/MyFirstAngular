@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<!DOCTYPE htm; />
+<html ng-app="store">
+ <head>
+ <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+ </head>
+ <body  ng-controller="StoreController as store">
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+ <script src="/Scripts/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<style>
+        .anchor
+        {
+            color: White !important;
+        }
+        .active
+        {                     
+            background-color: Maroon;
+        }
+       
+   </style>
+ @*<div ng-repeat="product in store.products">
+ <h3> {{product.name}} 
+ <h2> ${{product.price}} </h2>
+ <p> {{product.description}} </p>
+ <button ng-show="product.canPurchase">Add to Cart</button>
+ </div>*@
+ <ul class="list-group">
+ <li class="list-group-item" ng-repeat="product in store.products">
+ <h3>
+ {{product.name}}
+ <em class="pull-right">{{product.price | currency}}</em>
+ <br />
+ <img ng-src="{{product.image}}"/>
+ </h3>
+ <section ng-init="tab = 1" ng-controller="panelController as panel">
+ <ul class="nav nav-pills">
+ <li  ng-class="{ active:panel.isSelected(1) }"> 
+ <a href ng-click="panel.selectTab(1)" ng-class="{ anchor:panel.isSelected(1) }" style="color:Maroon">Description</a> 
+ </li>
+ <li  ng-class="{ active:panel.isSelected(2) }"> 
+ <a href ng-click="panel.selectTab(2)" ng-class="{ anchor:panel.isSelected(2) }" style="color:Maroon">Specifications</a> 
+ </li>
+ <li  ng-class="{ active:panel.isSelected(3) }"> 
+ <a href ng-click="panel.selectTab(3)" ng-class="{ anchor:panel.isSelected(3) }" style="color:Maroon">Reviews</a> 
+ </li>
+ </ul>
+ <div class="panel" ng-show="panel.isSelected(1)" >
+ <h4>Description</h4>
+ <p>{{product.description}}</p>
+</div>
+<div class="panel" ng-show="panel.isSelected(2)" >
+ <h4>Specifications</h4>
+ <blockquote>None yet</blockquote>
+</div>
+<div class="panel" ng-show="panel.isSelected(3)" >
+ <h4>Reviews</h4>
+ <blockquote ng-repeat="review in product.reviews">
+ <b>Stars: {{review.stars}}</b><br />
+ {{review.body}}<br />
+ <cite>by: {{review.author}}</cite>
+ </blockquote>
+ <form name="reviewForm">
+ <h3>Submit a Review</h3><br />
+<select>
+<option value="" selected="selected" disabled="disabled">Rate the Product</option>
+<option value="1">1 star</option>
+<option value="2">2 stars</option>
+<option value="3">3 stars</option>
+<option value="4">4 stars</option>
+<option value="5">5 stars</option>
+
+</select><br/><br />
+<textarea placeholder="Write a short review of the product..."></textarea><br />
+<label>by:</label>
+<input type="email"  placeholder="jimmydean@sausage.com" /><br />
+<input type="submit" value="Submit" />
+</form>
+</div>
+</section>
+ </li>
+ </ul>
+
+
+  <table id="tbPerson"></table>
+  @*<script>
+        $(document).ready(function () {
+            var html = "";
+            $.ajax({
+                url: "http://localhost:64713/api/Contract/Get",
+                type: "Get",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        html = '<tr><td>'
+                      + data[i].Id + '</td><td>'
+                      + data[i].Name + '</td></tr>';
+                        //                      + data[i].DOB + '</td></tr>';
+                        $("#tbPerson").append(html);
+                    }
+
+                },
+                error: function (msg) { alert(msg); }
+            });
+        });
+  </script>*@
+   
+ </body>
+</html>
